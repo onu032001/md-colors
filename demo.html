@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colors</title>
+    <link rel="stylesheet" href="../colors.css">
+    <style>
+        span.color {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+        .color-grid {
+            display: grid;
+            width: 300px;
+            grid-template-columns: repeat(10, 1fr);
+        }
+    </style>
+</head>
+<body>
+    <div class="color-grid"></div>
+    <p>RGB Color: <span id="result"></span></p>
+    <script src="../colors.js"></script>
+    <script>
+        function evalHex(hex, type) {
+            if (type === "red") {
+                return eval('0x' + hex.slice(1,3));
+            } else if (type === "green") {
+                return eval('0x' + hex.slice(3,5));
+            } else if (type === "blue") {
+                return eval('0x' + hex.slice(5,7));
+            }
+        }
+        const result = document.getElementById('result');
+        for (const item in colors) {
+            if (Object.prototype.hasOwnProperty.call(colors, item)) {
+                const color = colors[item];
+                const colorSpan = document.createElement('span');
+                colorSpan.classList.add('color')
+                colorSpan.style['background-color'] = `var(${item})`;
+                colorSpan.onclick = function () {
+                    result.innerText = `${color} (${item}, rgb(${evalHex(color, "red")} ${evalHex(color, "green")} ${evalHex(color, "blue")}))`;
+                    if ((function () {
+                        let cond_result = item === '--md-neutral-1';
+                        for (let i = 1; i <= 5; i++) {
+                            i = String(i);
+                            cond_result = cond_result || item.endsWith(i) && !(item.startsWith('--md-neutral'));
+                        }
+                        return cond_result;
+                    })()) {
+                        result.style['background-color'] = 'black';
+                    } else {
+                        result.style['background-color'] = '';
+                    }
+                    result.style.color = `var(${item})`;
+                };
+                document.querySelector('div.color-grid').append(colorSpan);
+            }
+        }
+    </script>
+</body>
+</html>
