@@ -7,7 +7,7 @@ Material design colors in GitHub. Colors are picked by `--md-\[color name\]-\[co
 
 Just put this macro if you want to use it in CSS.
 ```html
-<link href="https://onu032001.github.io/md-colors/colors.css">
+<link rel="stylesheet" href="https://onu032001.github.io/md-colors/colors.css">
 ```
 
 Or Javascript is open-source:
